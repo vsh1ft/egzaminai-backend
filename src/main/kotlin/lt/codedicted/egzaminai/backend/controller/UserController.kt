@@ -1,32 +1,24 @@
 package lt.codedicted.egzaminai.backend.controller
 
 import lt.codedicted.egzaminai.backend.model.User
-import lt.codedicted.egzaminai.backend.repository.UserRepo
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
+import lt.codedicted.egzaminai.backend.service.UserService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
-import java.security.Principal
 
 
 @RestController
+@RequestMapping("/user")
 class UserController
 constructor(
-    private val userRepo: UserRepo,
-    private val encoder: PasswordEncoder
+    private val userService: UserService
 ) {
 
-    @GetMapping("/user")
-    fun getUser(principal: Principal?): String {
-        return principal?.name ?: "Please log in"
+    @PostMapping("/create")
+    fun createsUser(@RequestBody user: User) {
+        userService.create(user)
     }
 
-    @PostMapping("/user/register")
-    fun register(@RequestBody user: User): ResponseEntity<String> {
-        if (userRepo.findByUsername(user.username) != null) {
-            return ResponseEntity("User already exists", HttpStatus.CONFLICT)
-        }
-        userRepo.insert(User(user.username, encoder.encode(user.password)))
-        return ResponseEntity.ok("created")
-    }
+    @GetMapping("/exist/{email}")
+    fun doesUserExist(@PathVariable email: String) = userService.exists(email)
+
 }

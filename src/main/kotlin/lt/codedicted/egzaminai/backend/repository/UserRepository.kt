@@ -4,6 +4,8 @@ import lt.codedicted.egzaminai.backend.model.User
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.repository.MongoRepository
 
-interface UserRepo : MongoRepository<User, ObjectId> {
-    fun findByUsername(username: String): User?
+interface UserRepository : MongoRepository<User, ObjectId> {
+    fun save(user: User)
+    fun findByEmail(email: String): User
+    fun existsByEmail(email: String): Boolean
 }

@@ -3,7 +3,8 @@ jacoco {
     toolVersion = "0.8.4"
 }
 
-def fileFilter = []
+def fileFilter = ['lt/codedicted/egzaminai/backend/model/', 'lt/codedicted/egzaminai/backend/config/', '**/Loader.*',
+                  '**/Application.*', '**/ApplicationKt.*']
 def debugTree = fileTree(dir: "${buildDir}/classes/kotlin/main", excludes: fileFilter)
 
 jacocoTestReport {
@@ -22,7 +23,7 @@ jacocoTestCoverageVerification {
             limit {
                 element = 'BUNDLE'
                 counter = "INSTRUCTION"
-                minimum = 1
+                minimum = 0.99
             }
         }
 

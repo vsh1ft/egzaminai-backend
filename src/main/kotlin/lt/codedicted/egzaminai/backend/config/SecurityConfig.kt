@@ -1,8 +1,9 @@
 package lt.codedicted.egzaminai.backend.config
 
-import lt.codedicted.egzaminai.backend.JwtSecretProvider
-import lt.codedicted.egzaminai.backend.jwt.JWTAuthenticationFilter
-import lt.codedicted.egzaminai.backend.jwt.JWTLoginFilter
+import lt.codedicted.egzaminai.backend.config.jwt.JWTAuthenticationFilter
+import lt.codedicted.egzaminai.backend.config.jwt.JWTCreateFilter
+import lt.codedicted.egzaminai.backend.config.jwt.JWTLoginFilter
+import lt.codedicted.egzaminai.backend.service.UserService
 import org.springframework.boot.autoconfigure.security.SecurityProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.security.web.session.SessionManagementFilter
 
 
 @Configuration
@@ -20,18 +22,25 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Order(SecurityProperties.BASIC_AUTH_ORDER)
 class SecurityConfig(
     private val authFilter: JWTAuthenticationFilter,
-    private val jwtSecretProvider: JwtSecretProvider
+    private val jwtSecretProvider: JwtSecretProvider,
+    private val userService: UserService
+
 ): WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
-        http.csrf().disable()
-            .httpBasic().disable()
+        http.httpBasic().disable()
+            .csrf().disable()
             .authorizeRequests()
-            .antMatchers("/test/").permitAll()
+            .antMatchers(*getAllowedMatchers()).permitAll()
             .anyRequest().authenticated()
             .and()
+            .addFilterBefore(CorsFilter(), SessionManagementFilter::class.java)
             .addFilterBefore(
-                jwtLoginFilterBean(),
+                createLoginFilterBean(),
+                UsernamePasswordAuthenticationFilter::class.java
+            )
+            .addFilterBefore(
+                createRegistrationFilterBean(),
                 UsernamePasswordAuthenticationFilter::class.java
             )
             .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter::class.java)
@@ -42,8 +51,22 @@ class SecurityConfig(
     override fun authenticationManagerBean(): AuthenticationManager = authenticationManager()
 
     @Bean
-    fun jwtLoginFilterBean() = JWTLoginFilter(jwtSecretProvider).apply {
-        setAuthenticationManager(authenticationManagerBean())
-    }
+    fun createLoginFilterBean() = JWTLoginFilter(jwtSecretProvider)
+        .apply {
+            setAuthenticationManager(authenticationManagerBean())
+        }
+
+    @Bean
+    fun createRegistrationFilterBean() = JWTCreateFilter(userService, jwtSecretProvider)
+        .apply {
+            setAuthenticationManager(authenticationManagerBean())
+        }
+
+    private fun getAllowedMatchers() = arrayOf(
+        "/user/login",
+        "/user/exist/{email}",
+        "/user/create",
+        "/user/reset-password"
+    )
 
 }

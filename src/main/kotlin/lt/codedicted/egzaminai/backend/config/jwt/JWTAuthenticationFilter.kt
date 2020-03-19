@@ -1,8 +1,8 @@
-package lt.codedicted.egzaminai.backend.jwt
+package lt.codedicted.egzaminai.backend.config.jwt
 
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
-import lt.codedicted.egzaminai.backend.JwtSecretProvider
+import lt.codedicted.egzaminai.backend.config.JwtSecretProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority

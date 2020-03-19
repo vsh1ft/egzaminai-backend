@@ -1,4 +1,4 @@
-package lt.codedicted.egzaminai.backend
+package lt.codedicted.egzaminai.backend.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
