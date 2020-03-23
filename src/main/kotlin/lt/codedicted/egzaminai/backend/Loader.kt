@@ -5,6 +5,12 @@ import lt.codedicted.egzaminai.backend.model.maturity.*
 import lt.codedicted.egzaminai.backend.model.pupp.PuppExam
 import lt.codedicted.egzaminai.backend.model.pupp.PuppExamDate
 import lt.codedicted.egzaminai.backend.model.pupp.PuppProgram
+import lt.codedicted.egzaminai.backend.model.types.ExamName
+import lt.codedicted.egzaminai.backend.model.types.ExamName.*
+import lt.codedicted.egzaminai.backend.model.types.ExamType.*
+import lt.codedicted.egzaminai.backend.model.types.PuppExamName
+import lt.codedicted.egzaminai.backend.model.types.Subject
+import lt.codedicted.egzaminai.backend.model.types.Subject.*
 import lt.codedicted.egzaminai.backend.repository.UserRepository
 import lt.codedicted.egzaminai.backend.repository.maturity.*
 import lt.codedicted.egzaminai.backend.repository.pupp.PuppExamDateRepository
@@ -43,18 +49,18 @@ constructor(
     private fun createMaturityExams() {
         maturityExamRepository.save(
             MaturityExam(
-                "Užsienio kalba (anglų)",
+                ExamName.ENGLISH_LANGUAGE,
                 2017,
-                "VBE",
+                NATIONAL_LEVEL,
                 "someUrl",
                 "answUrl"
             )
         )
         maturityExamRepository.save(
             MaturityExam(
-                "Lietuvių kalba ir literatūra",
+                ExamName.LITHUANIAN_LANGUAGE,
                 2016,
-                "VBE",
+                NATIONAL_LEVEL,
                 "someUrl",
                 "answUrl"
             )
@@ -65,7 +71,7 @@ constructor(
         maturityProgramRepository.save(
             MaturityProgram(
                 "Lietuviu kalbos programa",
-                "Lietuviu kalba",
+                Subject.LITHUANIAN_LANGUAGE,
                 "someUrl"
             )
         )
@@ -73,7 +79,7 @@ constructor(
 
     private fun createMaturityExamDates() {
         maturityExamDateRepository.save(
-            MaturityExamDate("Lietuviu kalba", "VBE", LocalDateTime.now())
+            MaturityExamDate(ExamName.LITHUANIAN_LANGUAGE, NATIONAL_LEVEL, LocalDateTime.now())
         )
     }
 
@@ -85,13 +91,13 @@ constructor(
 
     private fun createPuppExams() {
         puppExamRepository.save(
-            PuppExam("Lietuviu kalba", 2016, "someUrl")
+            PuppExam(PuppExamName.FOREIGN_LANGUAGE_VERBAL, 2016, "someUrl")
         )
     }
 
     private fun createPuppExamDates() {
         puppExamDateRepository.save(
-            PuppExamDate("Lietuviu kalbos egzaminas", LocalDateTime.now())
+            PuppExamDate(PuppExamName.FOREIGN_LANGUAGE_VERBAL, LocalDateTime.now())
         )
     }
 

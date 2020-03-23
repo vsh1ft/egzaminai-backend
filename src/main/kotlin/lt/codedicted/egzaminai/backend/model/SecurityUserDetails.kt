@@ -1,6 +1,5 @@
 package lt.codedicted.egzaminai.backend.model
 
-import lt.codedicted.egzaminai.backend.model.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
