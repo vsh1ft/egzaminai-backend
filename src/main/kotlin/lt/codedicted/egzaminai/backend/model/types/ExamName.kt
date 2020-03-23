@@ -1,23 +1,23 @@
 package lt.codedicted.egzaminai.backend.model.types
 
-enum class ExamName(val examName: String) {
-    LITHUANIAN_LANGUAGE("Lietuvių kalba ir literatūra"),
-    INFORMATICS("Informacinės technologijos"),
-    BIOLOGY("Biologija"),
-    MATH("Matematika"),
-    CHEMISTRY("Chemija"),
-    PHYSICS("Fizika"),
-    HISTORY("Istorija"),
-    ENGLISH_LANGUAGE("Užsienio kalba (anglų)"),
-    FRENCH_LANGUAGE("Užsienio kalba (prancūzų)"),
-    RUSSIAN_LANGUAGE("Užsienio kalba (rusų)"),
-    GERMAN_LANGUAGE("Užsienio kalba (vokiečių)"),
-    GEOGRAPHY("Geografija"),
-    NATIVE_BELARUSIAN_LANGUAGE("Gimtoji kalba (baltarusų)"),
-    NATIVE_POLISH_LANGUAGE("Gimtoji kalba (lenkų)"),
-    NATIVE_RUSSIAN_LANGUAGE("Gimtoji kalba (rusų)"),
-    MUSIC_CREATIVITY_TASK("Muzikologija (kūrybinė užduotis)"),
-    MUSIC_NOTES("Muzikologija (muzikos diktanto natos)"),
-    MUSIC_HISTORY("Muzikos istorijos ir teorijos testas"),
-    MUSICAL_THINKING("Muzikinio mąstymo testas")
+enum class ExamName() {
+    LITHUANIAN_LANGUAGE,
+    INFORMATICS,
+    BIOLOGY,
+    MATH,
+    CHEMISTRY,
+    PHYSICS,
+    HISTORY,
+    ENGLISH_LANGUAGE,
+    FRENCH_LANGUAGE,
+    RUSSIAN_LANGUAGE,
+    GERMAN_LANGUAGE,
+    GEOGRAPHY,
+    NATIVE_BELARUSIAN_LANGUAGE,
+    NATIVE_POLISH_LANGUAGE,
+    NATIVE_RUSSIAN_LANGUAGE,
+    MUSIC_CREATIVITY_TASK,
+    MUSIC_NOTES,
+    MUSIC_HISTORY,
+    MUSICAL_THINKING
 }

@@ -35,6 +35,13 @@ constructor(
 
     override fun run(vararg args: String) {
         userRepository.deleteAll()
+        maturityExamRepository.deleteAll()
+        maturityProgramRepository.deleteAll()
+        maturityExamDateRepository.deleteAll()
+        maturityCourseCreditRepository.deleteAll()
+        puppExamRepository.deleteAll()
+        puppExamDateRepository.deleteAll()
+        puppProgramRepository.deleteAll()
         userRepository.save(User("a@aa", "\$2a\$10\$NiRRH6KGGtGXcBIyazr9K.rGSzPI6zChZ12haproqnnw1JQuT3p3K"))
 
         createMaturityExams()
