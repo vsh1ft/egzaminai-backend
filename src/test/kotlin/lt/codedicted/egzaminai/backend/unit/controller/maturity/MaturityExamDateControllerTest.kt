@@ -5,6 +5,8 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import lt.codedicted.egzaminai.backend.controller.maturity.MaturityExamDateController
 import lt.codedicted.egzaminai.backend.model.maturity.MaturityExamDate
+import lt.codedicted.egzaminai.backend.model.types.ExamName
+import lt.codedicted.egzaminai.backend.model.types.ExamType
 import lt.codedicted.egzaminai.backend.repository.maturity.MaturityExamDateRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -27,7 +29,7 @@ class MaturityExamDateControllerTest {
 
     @Test
     fun `Retrieves dates`() {
-        val expectedDates = listOf(MaturityExamDate("user", "VBE", LocalDateTime.now()))
+        val expectedDates = listOf(MaturityExamDate(ExamName.LITHUANIAN_LANGUAGE, ExamType.NATIONAL_LEVEL, LocalDateTime.now()))
         every { repository.findAll() } returns expectedDates
 
         val actualDates = controller.getDates()

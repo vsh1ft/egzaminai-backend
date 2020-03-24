@@ -5,6 +5,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import lt.codedicted.egzaminai.backend.controller.pupp.PuppExamController
 import lt.codedicted.egzaminai.backend.model.pupp.PuppExam
+import lt.codedicted.egzaminai.backend.model.types.PuppExamName
 import lt.codedicted.egzaminai.backend.repository.pupp.PuppExamRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -26,7 +27,7 @@ class PuppExamControllerTest {
 
     @Test
     fun `Retrieves exams`() {
-        val expectedExams = listOf(PuppExam("user", 2020, "url"))
+        val expectedExams = listOf(PuppExam(PuppExamName.LITHUANIAN_LANGUAGE_WRITING, 2020, "url"))
         every { repository.findAll() } returns expectedExams
 
         val actualExams = controller.getExams()

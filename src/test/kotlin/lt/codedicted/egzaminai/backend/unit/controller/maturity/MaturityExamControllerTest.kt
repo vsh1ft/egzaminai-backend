@@ -5,6 +5,8 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import lt.codedicted.egzaminai.backend.controller.maturity.MaturityExamController
 import lt.codedicted.egzaminai.backend.model.maturity.MaturityExam
+import lt.codedicted.egzaminai.backend.model.types.ExamName
+import lt.codedicted.egzaminai.backend.model.types.ExamType
 import lt.codedicted.egzaminai.backend.repository.maturity.MaturityExamRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -26,7 +28,8 @@ class MaturityExamControllerTest {
 
     @Test
     fun `Retrieves exams`() {
-        val expectedExams = listOf(MaturityExam("user", 2020, "url", "url", "url"))
+        val expectedExams =
+            listOf(MaturityExam(ExamName.LITHUANIAN_LANGUAGE, 2020, ExamType.NATIONAL_LEVEL, "url", "url"))
         every { repository.findAll() } returns expectedExams
 
         val actualExams = controller.getExams()
