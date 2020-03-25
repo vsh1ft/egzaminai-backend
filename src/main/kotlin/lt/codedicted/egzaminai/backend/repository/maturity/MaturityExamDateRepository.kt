@@ -5,4 +5,8 @@ import lt.codedicted.egzaminai.backend.model.maturity.MaturityExamDate
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.repository.MongoRepository
 
-interface MaturityExamDateRepository  : MongoRepository<MaturityExamDate, ObjectId>
+interface MaturityExamDateRepository  : MongoRepository<MaturityExamDate, String> {
+
+    fun save(date: MaturityExamDate)
+
+}
