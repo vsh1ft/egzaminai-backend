@@ -16,6 +16,7 @@ import lt.codedicted.egzaminai.backend.repository.maturity.*
 import lt.codedicted.egzaminai.backend.repository.pupp.PuppExamDateRepository
 import lt.codedicted.egzaminai.backend.repository.pupp.PuppExamRepository
 import lt.codedicted.egzaminai.backend.repository.pupp.PuppProgramRepository
+import org.bson.types.ObjectId
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -56,6 +57,7 @@ constructor(
     private fun createMaturityExams() {
         maturityExamRepository.save(
             MaturityExam(
+                "123",
                 ExamName.ENGLISH_LANGUAGE,
                 2017,
                 NATIONAL_LEVEL,
@@ -65,6 +67,7 @@ constructor(
         )
         maturityExamRepository.save(
             MaturityExam(
+                "1234",
                 ExamName.LITHUANIAN_LANGUAGE,
                 2016,
                 NATIONAL_LEVEL,

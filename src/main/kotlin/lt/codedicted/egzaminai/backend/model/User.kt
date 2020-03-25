@@ -8,8 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 import javax.validation.constraints.Email
 import javax.validation.constraints.Size
 
-@Document
-data class User @PersistenceConstructor constructor(
+data class User(
 
     @Email
     @Indexed(unique = true)
