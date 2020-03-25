@@ -93,7 +93,7 @@ constructor(
 
     private fun createMaturityCourseCredits() {
         maturityCourseCreditRepository.save(
-            MaturityCourseCredit("Lietuviu kalbos iskaita", 2016, "someUrl")
+            MaturityCourseCredit("1", "Lietuviu kalbos iskaita", 2016, "someUrl")
         )
     }
 
