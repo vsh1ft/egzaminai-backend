@@ -6,17 +6,14 @@ import lt.codedicted.egzaminai.backend.model.pupp.PuppExam
 import lt.codedicted.egzaminai.backend.model.pupp.PuppExamDate
 import lt.codedicted.egzaminai.backend.model.pupp.PuppProgram
 import lt.codedicted.egzaminai.backend.model.types.ExamName
-import lt.codedicted.egzaminai.backend.model.types.ExamName.*
 import lt.codedicted.egzaminai.backend.model.types.ExamType.*
 import lt.codedicted.egzaminai.backend.model.types.PuppExamName
 import lt.codedicted.egzaminai.backend.model.types.Subject
-import lt.codedicted.egzaminai.backend.model.types.Subject.*
 import lt.codedicted.egzaminai.backend.repository.UserRepository
 import lt.codedicted.egzaminai.backend.repository.maturity.*
 import lt.codedicted.egzaminai.backend.repository.pupp.PuppExamDateRepository
 import lt.codedicted.egzaminai.backend.repository.pupp.PuppExamRepository
 import lt.codedicted.egzaminai.backend.repository.pupp.PuppProgramRepository
-import org.bson.types.ObjectId
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -80,6 +77,7 @@ constructor(
     private fun createMaturityPrograms() {
         maturityProgramRepository.save(
             MaturityProgram(
+                "1234",
                 "Lietuviu kalbos programa",
                 Subject.LITHUANIAN_LANGUAGE,
                 "someUrl"

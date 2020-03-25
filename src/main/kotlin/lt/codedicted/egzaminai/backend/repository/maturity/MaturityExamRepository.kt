@@ -4,10 +4,8 @@ import lt.codedicted.egzaminai.backend.model.maturity.MaturityExam
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.repository.MongoRepository
 
-interface MaturityExamRepository: MongoRepository<MaturityExam, ObjectId> {
+interface MaturityExamRepository: MongoRepository<MaturityExam, String> {
 
     fun save(exam: MaturityExam)
-
-    fun deleteById(id: String)
 
 }
