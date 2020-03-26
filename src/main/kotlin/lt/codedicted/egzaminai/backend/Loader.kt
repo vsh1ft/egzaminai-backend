@@ -105,7 +105,7 @@ constructor(
 
     private fun createPuppExamDates() {
         puppExamDateRepository.save(
-            PuppExamDate(PuppExamName.FOREIGN_LANGUAGE_VERBAL, LocalDateTime.now())
+            PuppExamDate("i", PuppExamName.FOREIGN_LANGUAGE_VERBAL, LocalDateTime.now())
         )
     }
 
