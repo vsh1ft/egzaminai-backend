@@ -111,7 +111,7 @@ constructor(
 
     private fun createPuppPrograms() {
         puppProgramRepository.save(
-            PuppProgram("Lietuviu kalbos programa", "someUrl")
+            PuppProgram("id", "Lietuviu kalbos programa", "someUrl")
         )
     }
 
