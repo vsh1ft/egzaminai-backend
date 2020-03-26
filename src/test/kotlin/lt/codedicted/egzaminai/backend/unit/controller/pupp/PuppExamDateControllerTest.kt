@@ -4,10 +4,7 @@ import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import lt.codedicted.egzaminai.backend.controller.pupp.PuppExamDateController
-import lt.codedicted.egzaminai.backend.model.maturity.MaturityExamDate
 import lt.codedicted.egzaminai.backend.model.pupp.PuppExamDate
-import lt.codedicted.egzaminai.backend.model.types.ExamName
-import lt.codedicted.egzaminai.backend.model.types.ExamType
 import lt.codedicted.egzaminai.backend.model.types.PuppExamName
 import lt.codedicted.egzaminai.backend.repository.pupp.PuppExamDateRepository
 import org.junit.jupiter.api.Assertions.assertEquals

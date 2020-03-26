@@ -2,7 +2,6 @@ package lt.codedicted.egzaminai.backend.controller
 
 import lt.codedicted.egzaminai.backend.model.User
 import lt.codedicted.egzaminai.backend.service.UserService
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 
 

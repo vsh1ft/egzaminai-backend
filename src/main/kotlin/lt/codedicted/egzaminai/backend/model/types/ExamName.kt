@@ -1,6 +1,6 @@
 package lt.codedicted.egzaminai.backend.model.types
 
-enum class ExamName() {
+enum class ExamName {
     LITHUANIAN_LANGUAGE,
     INFORMATICS,
     BIOLOGY,

@@ -4,9 +4,7 @@ import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import lt.codedicted.egzaminai.backend.controller.pupp.PuppProgramController
-import lt.codedicted.egzaminai.backend.model.maturity.MaturityProgram
 import lt.codedicted.egzaminai.backend.model.pupp.PuppProgram
-import lt.codedicted.egzaminai.backend.model.types.Subject
 import lt.codedicted.egzaminai.backend.repository.pupp.PuppProgramRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach

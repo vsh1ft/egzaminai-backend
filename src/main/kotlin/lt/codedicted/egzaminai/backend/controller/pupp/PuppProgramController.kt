@@ -1,9 +1,6 @@
 package lt.codedicted.egzaminai.backend.controller.pupp
 
-import lt.codedicted.egzaminai.backend.model.maturity.MaturityProgram
-import lt.codedicted.egzaminai.backend.model.pupp.PuppExamDate
 import lt.codedicted.egzaminai.backend.model.pupp.PuppProgram
-import lt.codedicted.egzaminai.backend.repository.pupp.PuppExamDateRepository
 import lt.codedicted.egzaminai.backend.repository.pupp.PuppProgramRepository
 import org.springframework.web.bind.annotation.*
 import java.util.*

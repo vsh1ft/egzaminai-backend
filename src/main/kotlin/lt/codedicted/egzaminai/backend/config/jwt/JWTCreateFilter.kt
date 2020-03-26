@@ -38,7 +38,7 @@ class JWTCreateFilter(
 
     @Autowired
     override fun setAuthenticationManager(authenticationManager: AuthenticationManager) {
-        super.setAuthenticationManager(authenticationManager);
+        super.setAuthenticationManager(authenticationManager)
     }
 
     override fun attemptAuthentication(req: HttpServletRequest, res: HttpServletResponse): Authentication {
