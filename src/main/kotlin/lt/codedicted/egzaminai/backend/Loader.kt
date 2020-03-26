@@ -99,7 +99,7 @@ constructor(
 
     private fun createPuppExams() {
         puppExamRepository.save(
-            PuppExam(PuppExamName.FOREIGN_LANGUAGE_VERBAL, 2016, "someUrl")
+            PuppExam("1", PuppExamName.FOREIGN_LANGUAGE_VERBAL, 2016, "someUrl")
         )
     }
 
