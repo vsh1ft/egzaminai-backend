@@ -3,6 +3,7 @@ package lt.codedicted.egzaminai.backend.config
 import lt.codedicted.egzaminai.backend.config.jwt.JWTAuthenticationFilter
 import lt.codedicted.egzaminai.backend.config.jwt.JWTCreateFilter
 import lt.codedicted.egzaminai.backend.config.jwt.JWTLoginFilter
+import lt.codedicted.egzaminai.backend.repository.TokenRepository
 import lt.codedicted.egzaminai.backend.service.UserService
 import org.springframework.boot.autoconfigure.security.SecurityProperties
 import org.springframework.context.annotation.Bean
@@ -23,7 +24,8 @@ import org.springframework.security.web.session.SessionManagementFilter
 class SecurityConfig(
     private val authFilter: JWTAuthenticationFilter,
     private val jwtSecretProvider: JwtSecretProvider,
-    private val userService: UserService
+    private val userService: UserService,
+private val repo: TokenRepository
 
 ): WebSecurityConfigurerAdapter() {
 
@@ -51,13 +53,13 @@ class SecurityConfig(
     override fun authenticationManagerBean(): AuthenticationManager = authenticationManager()
 
     @Bean
-    fun createLoginFilterBean() = JWTLoginFilter(jwtSecretProvider)
+    fun createLoginFilterBean() = JWTLoginFilter(jwtSecretProvider, repo)
         .apply {
             setAuthenticationManager(authenticationManagerBean())
         }
 
     @Bean
-    fun createRegistrationFilterBean() = JWTCreateFilter(userService, jwtSecretProvider)
+    fun createRegistrationFilterBean() = JWTCreateFilter(userService, jwtSecretProvider, repo)
         .apply {
             setAuthenticationManager(authenticationManagerBean())
         }

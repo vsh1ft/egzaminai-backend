@@ -7,8 +7,10 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import lt.codedicted.egzaminai.backend.config.JwtSecretProvider
+import lt.codedicted.egzaminai.backend.model.JwtToken
 import lt.codedicted.egzaminai.backend.model.User
 import lt.codedicted.egzaminai.backend.model.SecurityUserDetails
+import lt.codedicted.egzaminai.backend.repository.TokenRepository
 import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -21,7 +23,8 @@ import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class JWTLoginFilter(private val jwtSecretProvider: JwtSecretProvider):
+class JWTLoginFilter(private val jwtSecretProvider: JwtSecretProvider,
+                     private val tokenRepository: TokenRepository):
     AbstractAuthenticationProcessingFilter(AntPathRequestMatcher("/user/login", HttpMethod.POST.toString())) {
 
     override fun attemptAuthentication(req: HttpServletRequest, res: HttpServletResponse): Authentication {
@@ -40,10 +43,12 @@ class JWTLoginFilter(private val jwtSecretProvider: JwtSecretProvider):
         req: HttpServletRequest,
         res: HttpServletResponse, chain: FilterChain?, auth: Authentication
     ) {
+        val token = ObjectMapper().writeValueAsString((auth.principal as SecurityUserDetails).user.createJwt())
         res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200")
-        res.writer.write(ObjectMapper().writeValueAsString((auth.principal as SecurityUserDetails).user.createJwt()))
+        res.writer.write(token)
         res.writer.flush()
         res.writer.close()
+        tokenRepository.save(JwtToken(token.replace("\"", "")))
     }
 
     private fun User.createJwt(): String {
