@@ -12,12 +12,18 @@ class UserService(
     private val encoder: PasswordEncoder
 ) {
 
-    fun create(user: User){
+    fun create(user: User) {
         if (userRepository.existsByEmail(user.email))
             throw UserAlreadyExistException("User ${user.email} already exists")
 
         userRepository.save(user.copy(password = encoder.encode(user.password)))
     }
+
+    fun save(user: User) {
+        userRepository.save(user)
+    }
+
+    fun findByEmail(email: String) = userRepository.findByEmail(email)
 
     fun exists(email: String) = userRepository.existsByEmail(email)
 

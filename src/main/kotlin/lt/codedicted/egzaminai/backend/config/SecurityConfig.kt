@@ -68,6 +68,7 @@ private val repo: TokenRepository
         "/user/login",
         "/user/exist/{email}",
         "/user/create",
+        "/user/change-password",
         "/user/reset-password"
     )
 

@@ -29,7 +29,6 @@ class JWTLoginFilter(private val jwtSecretProvider: JwtSecretProvider,
 
     override fun attemptAuthentication(req: HttpServletRequest, res: HttpServletResponse): Authentication {
         val user: User = jacksonObjectMapper().readValue(req.inputStream)
-
         return authenticationManager.authenticate(
             UsernamePasswordAuthenticationToken(
                 user.email,

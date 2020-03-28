@@ -10,6 +10,7 @@ import lt.codedicted.egzaminai.backend.model.User
 import lt.codedicted.egzaminai.backend.repository.UserRepository
 import lt.codedicted.egzaminai.backend.service.UserService
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -60,6 +61,26 @@ class UserServiceTest {
         every { userRepository.existsByEmail(user.email) } returns true
 
         assertTrue(service.exists(user.email))
+    }
+
+    @Test
+    fun `Saves user`() {
+        val user = User("user", "password")
+        every { userRepository.save(user) } just Runs
+
+        service.save(user)
+
+        verify { userRepository.save(user) }
+    }
+
+    @Test
+    fun `Finds user by email`() {
+        val expectedUser = User("user", "password")
+        every { userRepository.findByEmail(expectedUser.email) } returns expectedUser
+
+        val actualUser = service.findByEmail(expectedUser.email)
+
+        assertEquals(expectedUser, actualUser)
     }
 
 }
