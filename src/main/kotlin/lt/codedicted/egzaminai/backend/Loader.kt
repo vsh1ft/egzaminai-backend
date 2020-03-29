@@ -87,7 +87,7 @@ constructor(
 
     private fun createMaturityExamDates() {
         maturityExamDateRepository.save(
-            MaturityExamDate("1", ExamName.LITHUANIAN_LANGUAGE, NATIONAL_LEVEL, LocalDateTime.now())
+            MaturityExamDate("1", ExamName.LITHUANIAN_LANGUAGE, NATIONAL_LEVEL, LocalDateTime.parse("2020-03-04T16:52"))
         )
     }
 
