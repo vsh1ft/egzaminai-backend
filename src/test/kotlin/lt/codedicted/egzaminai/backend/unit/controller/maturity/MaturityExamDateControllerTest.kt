@@ -4,12 +4,10 @@ import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import lt.codedicted.egzaminai.backend.controller.maturity.MaturityExamDateController
-import lt.codedicted.egzaminai.backend.model.maturity.MaturityExam
-import lt.codedicted.egzaminai.backend.model.maturity.MaturityExamDate
-import lt.codedicted.egzaminai.backend.model.types.ExamName
-import lt.codedicted.egzaminai.backend.model.types.ExamType
-import lt.codedicted.egzaminai.backend.repository.maturity.MaturityExamDateRepository
-import lt.codedicted.egzaminai.backend.service.ValidatorToExceptionConverter
+import lt.codedicted.egzaminai.core.model.maturity.MaturityExamDate
+import lt.codedicted.egzaminai.core.model.types.ExamName
+import lt.codedicted.egzaminai.core.model.types.ExamType
+import lt.codedicted.egzaminai.core.service.maturity.MaturityExamDateService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -20,22 +18,19 @@ import java.time.LocalDateTime
 class MaturityExamDateControllerTest {
 
     @MockK
-    private lateinit var repository: MaturityExamDateRepository
-
-    @MockK
-    private lateinit var validator: ValidatorToExceptionConverter
+    private lateinit var service: MaturityExamDateService
 
     private lateinit var controller: MaturityExamDateController
 
     @BeforeEach
     fun setUp() {
-        controller = MaturityExamDateController(repository, validator)
+        controller = MaturityExamDateController(service)
     }
 
     @Test
     fun `Retrieves dates`() {
         val expectedDates = listOf(MaturityExamDate("id", ExamName.LITHUANIAN_LANGUAGE, ExamType.NATIONAL_LEVEL,"" ,LocalDateTime.now()))
-        every { repository.findAll() } returns expectedDates
+        every { service.getDates() } returns expectedDates
 
         val actualDates = controller.getDates()
 
@@ -46,57 +41,31 @@ class MaturityExamDateControllerTest {
     fun `Saves date`() {
         val expectedDate =
             MaturityExamDate("id", ExamName.LITHUANIAN_LANGUAGE, ExamType.NATIONAL_LEVEL,"" , LocalDateTime.now())
-        every { repository.save(any()) } just Runs
-        every { validator.validate(expectedDate) } just Runs
+        every { service.save(any()) } just Runs
 
         controller.save(expectedDate)
 
-        verify { repository.save(any()) }
-    }
-
-    @Test
-    fun `Validates on save`() {
-        val expectedDate =
-            MaturityExamDate("id", ExamName.LITHUANIAN_LANGUAGE, ExamType.NATIONAL_LEVEL,"" , LocalDateTime.now())
-        every { repository.save(any()) } just Runs
-        every { validator.validate(expectedDate) } just Runs
-
-        controller.save(expectedDate)
-
-        verify { validator.validate(expectedDate) }
+        verify { service.save(any()) }
     }
 
     @Test
     fun `Updates date`() {
         val expectedDate =
             MaturityExamDate("id", ExamName.LITHUANIAN_LANGUAGE, ExamType.NATIONAL_LEVEL, "" ,LocalDateTime.now())
-        every { repository.save(expectedDate) } just Runs
-        every { validator.validate(expectedDate) } just Runs
+        every { service.save(expectedDate) } just Runs
 
         controller.update(expectedDate)
 
-        verify { repository.save(expectedDate) }
-    }
-
-    @Test
-    fun `Validates on update`() {
-        val expectedDate =
-            MaturityExamDate("id", ExamName.LITHUANIAN_LANGUAGE, ExamType.NATIONAL_LEVEL,"" , LocalDateTime.now())
-        every { repository.save(any()) } just Runs
-        every { validator.validate(expectedDate) } just Runs
-
-        controller.update(expectedDate)
-
-        verify { validator.validate(expectedDate) }
+        verify { service.save(expectedDate) }
     }
 
     @Test
     fun `Deletes date`() {
-        every { repository.deleteById("id") } just Runs
+        every { service.delete("id") } just Runs
 
         controller.delete("id")
 
-        verify { repository.deleteById("id") }
+        verify { service.delete("id") }
     }
 
 }

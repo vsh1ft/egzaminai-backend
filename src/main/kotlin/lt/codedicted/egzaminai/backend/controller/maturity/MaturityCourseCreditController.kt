@@ -1,40 +1,34 @@
 package lt.codedicted.egzaminai.backend.controller.maturity
 
 import lt.codedicted.egzaminai.backend.aspect.DatabaseUpdated
-import lt.codedicted.egzaminai.backend.model.maturity.MaturityCourseCredit
-import lt.codedicted.egzaminai.backend.repository.maturity.MaturityCourseCreditRepository
-import lt.codedicted.egzaminai.backend.service.ValidatorToExceptionConverter
 import org.springframework.web.bind.annotation.*
-import java.util.*
+import lt.codedicted.egzaminai.core.model.maturity.MaturityCourseCredit
+import lt.codedicted.egzaminai.core.service.maturity.MaturityCourseCreditService
 
 @RestController
-class MaturityCourseCreditController(private val repository: MaturityCourseCreditRepository,
-                                     private val validator: ValidatorToExceptionConverter
-) {
+class MaturityCourseCreditController(private val service: MaturityCourseCreditService) {
 
     @GetMapping("/credits")
     fun getCredits(): Collection<MaturityCourseCredit> {
-        return repository.findAll()
+        return service.getCredits()
     }
 
     @DatabaseUpdated
     @PostMapping("/credits")
     fun save(@RequestBody credit: MaturityCourseCredit) {
-        validator.validate(credit)
-        repository.save(credit.copy(id = UUID.randomUUID().toString()))
+        service.save(credit)
     }
 
     @DatabaseUpdated
     @PutMapping("/credits")
     fun update(@RequestBody credit: MaturityCourseCredit) {
-        validator.validate(credit)
-        repository.save(credit)
+        service.update(credit)
     }
 
     @DatabaseUpdated
     @DeleteMapping("/credits/{creditId}")
     fun delete(@PathVariable creditId: String) {
-        repository.deleteById(creditId)
+        service.delete(creditId)
     }
 
 }

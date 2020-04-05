@@ -20,6 +20,12 @@
     <context:component-scan base-package="lt.codedicted.egzaminai.backend">
     </context:component-scan>
 
+    <context:component-scan base-package="lt.codedicted.egzaminai.core">
+        <context:include-filter type="regex" expression="lt.codedicted.egzaminai.core.service.maturity.*"/>
+        <context:include-filter type="regex" expression="lt.codedicted.egzaminai.core.service.*"/>
+    </context:component-scan>
+
     <mongo:repositories base-package="lt.codedicted.egzaminai.backend.repository"/>
+    <mongo:repositories base-package="lt.codedicted.egzaminai.core.repository"/>
 
 </beans>

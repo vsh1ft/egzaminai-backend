@@ -23,7 +23,7 @@ import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.security.crypto.password.PasswordEncoder
 
 @ExtendWith(MockKExtension::class)
-class EmailSenderServiceTest {
+class DatabaseAspectTest {
 
     @MockK
     private lateinit var repository: DatabaseVersionRepository

@@ -4,11 +4,9 @@ import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import lt.codedicted.egzaminai.backend.controller.pupp.PuppExamDateController
-import lt.codedicted.egzaminai.backend.model.pupp.PuppExam
-import lt.codedicted.egzaminai.backend.model.pupp.PuppExamDate
-import lt.codedicted.egzaminai.backend.model.types.PuppExamName
-import lt.codedicted.egzaminai.backend.repository.pupp.PuppExamDateRepository
-import lt.codedicted.egzaminai.backend.service.ValidatorToExceptionConverter
+import lt.codedicted.egzaminai.core.model.pupp.PuppExamDate
+import lt.codedicted.egzaminai.core.model.types.PuppExamName
+import lt.codedicted.egzaminai.core.service.pupp.PuppExamDateService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -19,22 +17,19 @@ import java.time.LocalDateTime
 class PuppExamDateControllerTest {
 
     @MockK
-    private lateinit var repository: PuppExamDateRepository
-
-    @MockK
-    private lateinit var validator: ValidatorToExceptionConverter
+    private lateinit var service: PuppExamDateService
 
     private lateinit var controller: PuppExamDateController
 
     @BeforeEach
     fun setUp() {
-        controller = PuppExamDateController(repository, validator)
+        controller = PuppExamDateController(service)
     }
 
     @Test
     fun `Retrieves dates`() {
         val expectedDates = listOf(PuppExamDate("id", PuppExamName.LITHUANIAN_LANGUAGE_WRITING, "", LocalDateTime.now()))
-        every { repository.findAll() } returns expectedDates
+        every { service.getDates() } returns expectedDates
 
         val actualDates = controller.getDates()
 
@@ -45,57 +40,31 @@ class PuppExamDateControllerTest {
     fun `Saves date`() {
         val expectedDate =
             PuppExamDate("id", PuppExamName.LITHUANIAN_LANGUAGE_WRITING,"", LocalDateTime.now())
-        every { repository.save(any()) } just Runs
-        every { validator.validate(expectedDate) } just Runs
+        every { service.save(any()) } just Runs
 
         controller.save(expectedDate)
 
-        verify { repository.save(any()) }
-    }
-
-    @Test
-    fun `Validates on save`() {
-        val expectedDate =
-            PuppExamDate("id", PuppExamName.LITHUANIAN_LANGUAGE_WRITING,"", LocalDateTime.now())
-        every { repository.save(any()) } just Runs
-        every { validator.validate(expectedDate) } just Runs
-
-        controller.save(expectedDate)
-
-        verify { validator.validate(expectedDate) }
+        verify { service.save(any()) }
     }
 
     @Test
     fun `Updates date`() {
         val expectedDate =
             PuppExamDate("id", PuppExamName.LITHUANIAN_LANGUAGE_WRITING,"", LocalDateTime.now())
-        every { repository.save(expectedDate) } just Runs
-        every { validator.validate(expectedDate) } just Runs
+        every { service.save(expectedDate) } just Runs
 
         controller.update(expectedDate)
 
-        verify { repository.save(expectedDate) }
-    }
-
-    @Test
-    fun `Validates on update`() {
-        val expectedDate =
-            PuppExamDate("id", PuppExamName.LITHUANIAN_LANGUAGE_WRITING,"", LocalDateTime.now())
-        every { repository.save(any()) } just Runs
-        every { validator.validate(expectedDate) } just Runs
-
-        controller.update(expectedDate)
-
-        verify { validator.validate(expectedDate) }
+        verify { service.save(expectedDate) }
     }
 
     @Test
     fun `Deletes date`() {
-        every { repository.deleteById("id") } just Runs
+        every { service.delete("id") } just Runs
 
         controller.delete("id")
 
-        verify { repository.deleteById("id") }
+        verify { service.delete("id") }
     }
 
 }

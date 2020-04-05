@@ -1,40 +1,36 @@
 package lt.codedicted.egzaminai.backend.controller.pupp
 
 import lt.codedicted.egzaminai.backend.aspect.DatabaseUpdated
-import lt.codedicted.egzaminai.backend.model.pupp.PuppExam
-import lt.codedicted.egzaminai.backend.repository.pupp.PuppExamRepository
-import lt.codedicted.egzaminai.backend.service.ValidatorToExceptionConverter
+import lt.codedicted.egzaminai.core.model.pupp.PuppExam
+import lt.codedicted.egzaminai.core.service.pupp.PuppExamService
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
-class PuppExamController(private val repository: PuppExamRepository,
-                         private val validator: ValidatorToExceptionConverter
+class PuppExamController(private val service: PuppExamService
 ) {
 
     @GetMapping("/pupp-exams")
     fun getExams(): Collection<PuppExam> {
-        return repository.findAll()
+        return service.getExams()
     }
 
     @DatabaseUpdated
     @PostMapping("/pupp-exams")
     fun save(@RequestBody exam: PuppExam) {
-        validator.validate(exam)
-        repository.save(exam.copy(id = UUID.randomUUID().toString()))
+        service.save(exam)
     }
 
     @DatabaseUpdated
     @PutMapping("/pupp-exams")
     fun update(@RequestBody exam: PuppExam) {
-        validator.validate(exam)
-        repository.save(exam)
+        service.save(exam)
     }
 
     @DatabaseUpdated
     @DeleteMapping("/pupp-exams/{puppExamId}")
     fun delete(@PathVariable puppExamId: String) {
-        repository.deleteById(puppExamId)
+        service.delete(puppExamId)
     }
 
 }

@@ -1,40 +1,35 @@
 package lt.codedicted.egzaminai.backend.controller.maturity
 
 import lt.codedicted.egzaminai.backend.aspect.DatabaseUpdated
-import lt.codedicted.egzaminai.backend.model.maturity.MaturityProgram
-import lt.codedicted.egzaminai.backend.repository.maturity.MaturityProgramRepository
-import lt.codedicted.egzaminai.backend.service.ValidatorToExceptionConverter
+import lt.codedicted.egzaminai.core.model.maturity.MaturityProgram
+import lt.codedicted.egzaminai.core.service.maturity.MaturityProgramService
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
-class MaturityProgramController(private val repository: MaturityProgramRepository,
-                                private val validator: ValidatorToExceptionConverter
-) {
+class MaturityProgramController(private val service: MaturityProgramService) {
 
     @GetMapping("/programs")
     fun getPrograms(): Collection<MaturityProgram> {
-        return repository.findAll()
+        return service.getPrograms()
     }
 
     @DatabaseUpdated
     @PostMapping("/programs")
     fun save(@RequestBody program: MaturityProgram) {
-        validator.validate(program)
-        repository.save(program.copy(id = UUID.randomUUID().toString()))
+        service.save(program)
     }
 
     @DatabaseUpdated
     @PutMapping("/programs")
     fun update(@RequestBody program: MaturityProgram) {
-        validator.validate(program)
-        repository.save(program)
+        service.save(program)
     }
 
     @DatabaseUpdated
     @DeleteMapping("/programs/{programId}")
     fun delete(@PathVariable programId: String) {
-        repository.deleteById(programId)
+        service.delete(programId)
     }
 
 }

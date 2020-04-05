@@ -5,6 +5,8 @@ repositories {
 }
 
 dependencies {
+    implementation "lt.codedicted.egzaminai:egzaminai-core:1.0.0"
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
