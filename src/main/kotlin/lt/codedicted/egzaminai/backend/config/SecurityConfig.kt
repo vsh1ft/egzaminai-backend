@@ -73,7 +73,8 @@ class SecurityConfig(
         "/dates",
         "/pupp-dates",
         "/pupp-exams",
-        "/pupp-programs"
+        "/pupp-programs",
+        "/database-version"
     )
 
     private fun getAllowedMatchers() = arrayOf(

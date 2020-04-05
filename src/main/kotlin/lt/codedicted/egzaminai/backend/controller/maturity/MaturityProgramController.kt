@@ -1,5 +1,6 @@
 package lt.codedicted.egzaminai.backend.controller.maturity
 
+import lt.codedicted.egzaminai.backend.aspect.DatabaseUpdated
 import lt.codedicted.egzaminai.backend.model.maturity.MaturityProgram
 import lt.codedicted.egzaminai.backend.repository.maturity.MaturityProgramRepository
 import lt.codedicted.egzaminai.backend.service.ValidatorToExceptionConverter
@@ -16,18 +17,21 @@ class MaturityProgramController(private val repository: MaturityProgramRepositor
         return repository.findAll()
     }
 
+    @DatabaseUpdated
     @PostMapping("/programs")
     fun save(@RequestBody program: MaturityProgram) {
         validator.validate(program)
         repository.save(program.copy(id = UUID.randomUUID().toString()))
     }
 
+    @DatabaseUpdated
     @PutMapping("/programs")
     fun update(@RequestBody program: MaturityProgram) {
         validator.validate(program)
         repository.save(program)
     }
 
+    @DatabaseUpdated
     @DeleteMapping("/programs/{programId}")
     fun delete(@PathVariable programId: String) {
         repository.deleteById(programId)

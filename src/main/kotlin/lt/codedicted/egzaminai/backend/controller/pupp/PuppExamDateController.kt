@@ -1,5 +1,6 @@
 package lt.codedicted.egzaminai.backend.controller.pupp
 
+import lt.codedicted.egzaminai.backend.aspect.DatabaseUpdated
 import lt.codedicted.egzaminai.backend.model.pupp.PuppExamDate
 import lt.codedicted.egzaminai.backend.repository.pupp.PuppExamDateRepository
 import lt.codedicted.egzaminai.backend.service.ValidatorToExceptionConverter
@@ -17,18 +18,21 @@ class PuppExamDateController(private val repository: PuppExamDateRepository,
         return repository.findAll()
     }
 
+    @DatabaseUpdated
     @PostMapping("/pupp-dates")
     fun save(@RequestBody date: PuppExamDate) {
         validator.validate(date)
         repository.save(date.copy(id = UUID.randomUUID().toString()))
     }
 
+    @DatabaseUpdated
     @PutMapping("/pupp-dates")
     fun update(@RequestBody date: PuppExamDate) {
         validator.validate(date)
         repository.save(date)
     }
 
+    @DatabaseUpdated
     @DeleteMapping("/pupp-dates/{dateId}")
     fun delete(@PathVariable dateId: String) {
         repository.deleteById(dateId)
