@@ -8,7 +8,7 @@ import javax.validation.constraints.Email
 data class PasswordChangeToken(
     @Id val token: String,
 
-    @Email
+    @field:Email
     val email: String,
 
     private val date: LocalDateTime = LocalDateTime.now(UTC)

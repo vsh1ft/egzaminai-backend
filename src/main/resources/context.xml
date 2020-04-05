@@ -17,5 +17,4 @@
 
     <mongo:repositories base-package="lt.codedicted.egzaminai.backend.repository"/>
 
-
 </beans>

@@ -4,13 +4,18 @@ import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import lt.codedicted.egzaminai.backend.controller.maturity.MaturityProgramController
+import lt.codedicted.egzaminai.backend.model.maturity.MaturityExamDate
 import lt.codedicted.egzaminai.backend.model.maturity.MaturityProgram
+import lt.codedicted.egzaminai.backend.model.types.ExamName
+import lt.codedicted.egzaminai.backend.model.types.ExamType
 import lt.codedicted.egzaminai.backend.model.types.Subject
 import lt.codedicted.egzaminai.backend.repository.maturity.MaturityProgramRepository
+import lt.codedicted.egzaminai.backend.service.ValidatorToExceptionConverter
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import java.time.LocalDateTime
 
 @ExtendWith(MockKExtension::class)
 class MaturityProgramControllerTest {
@@ -18,11 +23,14 @@ class MaturityProgramControllerTest {
     @MockK
     private lateinit var repository: MaturityProgramRepository
 
+    @MockK
+    private lateinit var validator: ValidatorToExceptionConverter
+
     private lateinit var controller: MaturityProgramController
 
     @BeforeEach
     fun setUp() {
-        controller = MaturityProgramController(repository)
+        controller = MaturityProgramController(repository, validator)
     }
 
     @Test
@@ -40,6 +48,7 @@ class MaturityProgramControllerTest {
         val expectedProgram =
             MaturityProgram("", "user", Subject.LITHUANIAN_LANGUAGE, "url")
         every { repository.save(any()) } just Runs
+        every { validator.validate(expectedProgram) } just Runs
 
         controller.save(expectedProgram)
 
@@ -47,14 +56,39 @@ class MaturityProgramControllerTest {
     }
 
     @Test
+    fun `Validates on save`() {
+        val expectedProgram =
+            MaturityProgram("", "user", Subject.LITHUANIAN_LANGUAGE, "url")
+        every { repository.save(any()) } just Runs
+        every { validator.validate(expectedProgram) } just Runs
+
+        controller.save(expectedProgram)
+
+        verify { validator.validate(expectedProgram) }
+    }
+
+    @Test
     fun `Updates program`() {
         val expectedProgram =
             MaturityProgram("", "user", Subject.LITHUANIAN_LANGUAGE, "url")
         every { repository.save(expectedProgram) } just Runs
+        every { validator.validate(expectedProgram) } just Runs
 
         controller.update(expectedProgram)
 
         verify { repository.save(expectedProgram) }
+    }
+
+    @Test
+    fun `Validates on update`() {
+        val expectedProgram =
+            MaturityProgram("", "user", Subject.LITHUANIAN_LANGUAGE, "url")
+        every { repository.save(any()) } just Runs
+        every { validator.validate(expectedProgram) } just Runs
+
+        controller.update(expectedProgram)
+
+        verify { validator.validate(expectedProgram) }
     }
 
     @Test

@@ -9,11 +9,11 @@ data class MaturityProgram(
 
     @Id val id: String,
 
-    @Length(min = 1, max = 100)
+    @field:Length(min = 1, max = 100)
     val name: String,
 
     val subject: Subject,
 
-    @URL
+    @field:URL
     val programUrl: String
 )

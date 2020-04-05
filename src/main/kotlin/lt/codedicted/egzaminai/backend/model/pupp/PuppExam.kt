@@ -12,10 +12,10 @@ data class PuppExam(
 
     val name: PuppExamName,
 
-    @Min(2010)
-    @Max(2030)
+    @field:Min(2010)
+    @field:Max(2030)
     val year: Int,
 
-    @URL
+    @field:URL
     val examUrl: String
 )

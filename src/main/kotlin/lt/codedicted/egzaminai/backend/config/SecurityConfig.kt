@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -25,7 +26,7 @@ class SecurityConfig(
     private val authFilter: JWTAuthenticationFilter,
     private val jwtSecretProvider: JwtSecretProvider,
     private val userService: UserService,
-private val repo: TokenRepository
+    private val repo: TokenRepository
 
 ): WebSecurityConfigurerAdapter() {
 
@@ -34,6 +35,7 @@ private val repo: TokenRepository
             .csrf().disable()
             .authorizeRequests()
             .antMatchers(*getAllowedMatchers()).permitAll()
+            .antMatchers(HttpMethod.GET, *getRequests()).permitAll()
             .anyRequest().authenticated()
             .and()
             .addFilterBefore(CorsFilter(), SessionManagementFilter::class.java)
@@ -63,6 +65,16 @@ private val repo: TokenRepository
         .apply {
             setAuthenticationManager(authenticationManagerBean())
         }
+
+    private fun getRequests() = arrayOf(
+        "/exams",
+        "/programs",
+        "/credits",
+        "/dates",
+        "/pupp-dates",
+        "/pupp-exams",
+        "/pupp-programs"
+    )
 
     private fun getAllowedMatchers() = arrayOf(
         "/user/login",

@@ -8,7 +8,7 @@ import javax.validation.constraints.Size
 
 data class User(
 
-    @Email
+    @field:Email
     @Indexed(unique = true)
     val email: String,
 

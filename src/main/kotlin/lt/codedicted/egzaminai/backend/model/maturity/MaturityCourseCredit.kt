@@ -10,13 +10,13 @@ data class MaturityCourseCredit(
 
     @Id val id: String,
 
-    @Length(min = 1, max = 100)
+    @field:Length(min = 1, max = 100)
     val name: String,
 
-    @Min(2010)
-    @Max(2030)
+    @field:Min(2010)
+    @field:Max(2030)
     val year: Int,
 
-    @URL
+    @field:URL
     val creditUrl: String
 )
