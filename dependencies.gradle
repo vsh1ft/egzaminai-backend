@@ -1,3 +1,5 @@
+apply from: 'aws-credentials.gradle'
+
 repositories {
     mavenLocal()
     jcenter()
