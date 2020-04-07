@@ -22,6 +22,10 @@ mainClassName = 'lt.codedicted.egzaminai.backend.ApplicationKt'
 
 defaultTasks 'run'
 
+shadowJar {
+    mergeServiceFiles('META-INF/spring.*')
+}
+
 test {
     useJUnitPlatform()
     testLogging {
