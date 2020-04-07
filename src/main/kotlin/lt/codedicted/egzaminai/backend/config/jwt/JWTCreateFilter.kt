@@ -20,14 +20,12 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
-import org.springframework.stereotype.Component
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@Component
 class JWTCreateFilter(
     private val userService: UserService,
     private val jwtSecretProvider: JwtSecretProvider,
@@ -62,7 +60,7 @@ class JWTCreateFilter(
         res: HttpServletResponse, chain: FilterChain?, auth: Authentication
     ) {
         val token = ObjectMapper().writeValueAsString((auth.principal as SecurityUserDetails).user.createJwt())
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200")
+        res.setHeader("Access-Control-Allow-Origin", "*")
         res.writer.write(token)
         res.writer.flush()
         res.writer.close()
